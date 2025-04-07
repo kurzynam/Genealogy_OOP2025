@@ -20,7 +20,7 @@ public class Main {
         parent.adopt(child2);
         parent.adopt(child3);
         parent.adopt(child4);
-
+        System.out.println("ufjjdjjdjdd");
 
 
     }
