@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Person implements Comparable<Person>{
     private String fname, lname;
@@ -8,6 +9,14 @@ public class Person implements Comparable<Person>{
     public boolean adopt(Person child){
         return children.add(child);
     }
+
+    public Person(String fname, String lname, LocalDate birthDate) {
+        this.fname = fname;
+        this.lname = lname;
+        this.birthDate = birthDate;
+        this.children = new TreeSet<>();
+    }
+
     public Person getYoungestChild(){
 //        if(children.isEmpty())
 //            return null;
@@ -25,6 +34,6 @@ public class Person implements Comparable<Person>{
 
     @Override
     public int compareTo(Person o) {
-        this.birthDate.compareTo(o.birthDate);
+        return this.birthDate.compareTo(o.birthDate);
     }
 }
