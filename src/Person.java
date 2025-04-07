@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -30,10 +31,20 @@ public class Person implements Comparable<Person>{
         }
         return youngestChild;
     }
-
+    public List<Person> getChildren(){
+        return List.copyOf(children);
+    }
 
     @Override
     public int compareTo(Person o) {
         return this.birthDate.compareTo(o.birthDate);
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public String getLname() {
+        return lname;
     }
 }
