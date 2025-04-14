@@ -1,5 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -70,7 +75,7 @@ public class Person implements Comparable<Person>{
         String[] colums = line.split(",");
         String[] flname = colums[0].split(" ");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate birthDate = null;
         LocalDate deathDate = null;
         if (isNotEmpty(colums[1])){
@@ -80,7 +85,24 @@ public class Person implements Comparable<Person>{
             deathDate = LocalDate.parse(colums[2], formatter);
         }
         return new Person(flname[0], flname[1], birthDate, deathDate);
+    }
 
+    public static List<Person> fromCsv(String path){
+        List<Person> people = new ArrayList<>();
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String line;
+            br.readLine();
+            while((line = br.readLine()) != null){
+                Person readPerson = fromCsvLine(line);
+                people.add(readPerson);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File doesn't exist");
+        } catch (IOException e) {
+            System.err.println("Error during reading file");
+        }
+        return people;
     }
 
 
