@@ -104,6 +104,8 @@ public class Person implements Comparable<Person>{
             System.err.println("File doesn't exist");
         } catch (IOException e) {
             System.err.println("Error during reading file");
+        } catch (NegativeLifespanException e){
+            System.err.println(e.getMessage());
         }
         return people;
     }
