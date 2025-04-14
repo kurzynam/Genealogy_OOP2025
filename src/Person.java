@@ -71,7 +71,7 @@ public class Person implements Comparable<Person>{
         this.deathDate = deathDate;
     }
 
-    public static Person fromCsvLine(String line){
+    public static Person fromCsvLine(String line) throws NegativeLifespanException {
         String[] colums = line.split(",");
         String[] flname = colums[0].split(" ");
 
@@ -83,6 +83,9 @@ public class Person implements Comparable<Person>{
         }
         if (isNotEmpty(colums[2])){
             deathDate = LocalDate.parse(colums[2], formatter);
+            if (isNotEmpty(colums[1]) && deathDate.isBefore(birthDate)){
+                throw new NegativeLifespanException(flname[0], flname[1]);
+            }
         }
         return new Person(flname[0], flname[1], birthDate, deathDate);
     }
