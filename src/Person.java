@@ -98,7 +98,21 @@ public class Person implements Comparable<Person>{
             br.readLine();
             while((line = br.readLine()) != null){
                 Person readPerson = fromCsvLine(line);
-                people.add(readPerson);
+                for (Person existingPerson : people){
+                    if(!existingPerson.fname.equals(readPerson.fname) ||
+                            !existingPerson.lname.equals(readPerson.lname)){
+                        people.add(readPerson);
+                    }
+                    if(!existingPerson.fname.equals(readPerson.fname) ||
+                            !existingPerson.lname.equals(readPerson.lname)){
+                        people.add(readPerson);
+                    }
+                    if(!existingPerson.fname.equals(readPerson.fname) ||
+                            !existingPerson.lname.equals(readPerson.lname)){
+                        people.add(readPerson);
+                    }
+                }
+
             }
         } catch (FileNotFoundException e) {
             System.err.println("File doesn't exist");
