@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Person implements Comparable<Person>{
     private String fname, lname;
@@ -168,7 +169,16 @@ public class Person implements Comparable<Person>{
     }
 
     public static String toUMLFile(List<Person> people){
-        return "";
+        Function<List<Person>, String> convertToUML = list ->{
+            String openningTag = "@startuml";
+            String endingTag = "@enduml";
+            List<String> objectLines = list.stream().map(pipla -> pipla.toUMLObject()).collect(Collectors.toList());
+            List<String> relationLines = list.stream().map(pipla -> pipla.toUMLRelation()).collect(Collectors.toList());
+            return openningTag + "\n" + String.join("\n", objectLines) + String.join("\n", relationLines) + endingTag;
+        };
+
+        return convertToUML.apply(people);
+
     }
 
     public void setFather(Person parent) {
