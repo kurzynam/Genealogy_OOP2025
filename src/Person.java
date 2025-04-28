@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Function;
 
 public class Person implements Comparable<Person>{
     private String fname, lname;
@@ -98,7 +99,11 @@ public class Person implements Comparable<Person>{
             br.readLine();
             while((line = br.readLine()) != null){
                 Person readPerson = fromCsvLine(line);
-                for (Person existingPerson : people){
+                if (people.size() == 0){
+                    people.add(readPerson);
+                }
+                for (int i = 0; i < people.size(); i++){
+                    Person existingPerson = people.get(i);
                     if(!existingPerson.fname.equals(readPerson.fname) ||
                             !existingPerson.lname.equals(readPerson.lname)){
                         people.add(readPerson);
@@ -124,7 +129,20 @@ public class Person implements Comparable<Person>{
         return people;
     }
 
+    public String toUMLline(Person pipla){
+        return "aaaaa";
+    }
 
+
+    public String toUML(){
+        Function<String, String> addQuotes = text -> "\"" + text + "\"";
+        Function<Person, String> getFullnameWithSpace = pipla -> pipla.fname + " " + pipla.lname;
+        Function<Person, String> getFullname = pipla -> pipla.fname + pipla.lname;
+        Function<Person, String> toUMLline = pipla ->
+                String.format("object " + addQuotes.apply(getFullnameWithSpace.apply(pipla))
+                        + " as " + getFullname.apply(pipla));
+        return toUMLline.apply(this);
+    }
 
     public static boolean isNotEmpty(String s){
         return s != null && s != "" && s != " " && s != "\t";
